@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+
+public class GFG {
+	public static void Main(string[] args)
+	{
+		string str1 = "AGGTAB";
+		string str2 = "GXTXAYB";
+		string lcs = LongestCommonSubsequence(str1, str2);
+		Console.WriteLine("Length of LCS is " + lcs.Length);
+	}
+	public static string
+	LongestCommonSubsequence(string str1, string str2)
+	{
+		List<string> subsequences1
+			= GenerateSubsequences(str1);
+		List<string> subsequences2
+			= GenerateSubsequences(str2);
+
+		string lcs = "";
+		foreach(string subsequence1 in subsequences1)
+		{
+			foreach(string subsequence2 in subsequences2)
+			{
+				if (subsequence1.Equals(subsequence2)
+					&& subsequence1.Length > lcs.Length) {
+					lcs = subsequence1;
+				}
+			}
+		}
+		return lcs;
+	}
+
+	public static List<string>
+	GenerateSubsequences(string str)
+	{
+		List<string> subsequences = new List<string>();
+		GenerateSubsequencesHelper(str, "", 0,
+								subsequences);
+		return subsequences;
+	}
+
+	public static void GenerateSubsequencesHelper(
+		string str, string subsequence, int index,
+		List<string> subsequences)
+	{
+		if (index == str.Length) {
+			subsequences.Add(subsequence);
+			return;
+		}
+		GenerateSubsequencesHelper(str, subsequence,
+								index + 1, subsequences);
+		GenerateSubsequencesHelper(str,
+								subsequence + str[index],
+								index + 1, subsequences);
+	}
+}
+// This code is contributed by user_dtewbxkn77n
